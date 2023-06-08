@@ -1,4 +1,7 @@
 const express = require('express')
+const { dbConnection } = require('../database/config')
+const cors  = require('cors');//Implementar seguridad
+const bodyParser = require('body-parser')//Recibir datos de formularios html
 
 class Server{
 
@@ -8,7 +11,7 @@ class Server{
         this.usuarioPath = '/api/usuario' //Ruta pública
         this.middlewares()
         this.routes()
-
+        this.conectarDB() 
     }
 
     listen(){
@@ -19,11 +22,19 @@ class Server{
 
     middlewares(){
         this.app.use(express.static(__dirname + "/public"));
+        
+        this.app.use( cors() );
+
+        this.app.use(bodyParser.json()) // for parsing application/json
     }
 
     routes() {
        this.app.use(this.usuarioPath, require('../routes/usuarios'))
     }
+
+    async conectarDB(){
+        await dbConnection() //Esperar la respuesta del servidor        
+    }
 }
 
-module.exports = { Server }
+module.exports =  Server 

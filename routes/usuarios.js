@@ -2,28 +2,16 @@ const {Router} = require('express')
 
 const route = Router() 
 
-route.get('/', (req, res) => {
-    res.json({
-        msg: 'API GET'
-    })
-})
+//Importar métodos del controlador
+const {usuarioGet, usuarioPost, usuarioPut, usuarioDelete} = require('../controllers/usuario')
 
-route.post('/', (req, res) => {
-    res.json({
-        msg: 'API POST'
-    })
-})
+route.get('/', usuarioGet)
 
-route.put('/', (req, res) => {
-    res.json({
-        msg: 'API PUT'
-    })
-})
+route.post('/', usuarioPost)
 
-route.delete('/', (req, res) => {
-    res.json({
-        msg: 'API DELETE'
-    })
-})
+route.put('/', usuarioPut)
+
+
+route.delete('/', usuarioDelete)
 
 module.exports = route
