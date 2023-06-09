@@ -66,11 +66,11 @@ const usuarioPut = async(req, res = response) => {
 //Modificar
 const usuarioDelete = async(req, res = response) => {
 
-    const {nombre} = req.query
+    const {_id} = req.body
     let mensaje = ''
 
     try{
-        const usuario = await Usuario.findOneAndDelete({nombre: nombre})
+        const usuario = await Usuario.deleteOne({_id: _id})
         mensaje = 'La eliminiación se efectuó exitosamente.'
     }
     catch(error){

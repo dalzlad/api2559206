@@ -17,7 +17,7 @@ const listarDatos = async() => {
             respuesta += `<tr><td>${usuario.nombre}</td>`+
             `<td>${usuario.rol}</td>`+
             `<td>${usuario.estado}</td>`+
-            `<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick='editar(${JSON.stringify(usuario)})' >Editar</a> <a href=''>Eliminar</a></td>`+
+            `<td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick='editar(${JSON.stringify(usuario)})' >Editar</a> <a class="waves-effect waves-light btn modal-danger deep-orange darken-4" href='#' onclick='eliminar("${usuario._id}")'>Eliminar</a></td>`+
             `</tr>`
             body.innerHTML = respuesta
         })
@@ -111,6 +111,24 @@ const actualizar = async()=>{
     }
 }
 
+const eliminar = (id) =>{
+    if(confirm('¿Está seguro de realizar la eliminación') == true){
+
+           let usuario = {
+                _id: id
+            }
+           fetch(url,  {
+                method: 'DELETE',
+                mode: 'cors',
+                body: JSON.stringify(usuario),//Convertir el objeto _usuario  a un JSON
+                headers: {"Content-type": "application/json; charset=UTF-8"}
+            })
+            .then((resp) => resp.json()) //Obtener la respuesta y convertirla a json
+            .then(json => {
+                alert(json.msg)//Mensaje que retorna la API
+            }) 
+    }
+}
 
 if(document.querySelector('#btnRegistrar')){
     document.querySelector('#btnRegistrar')
