@@ -1,5 +1,6 @@
 //Importar paquetes requeridos de Node
 const {response} = require('express')
+const bcrypt = require('bcrypt') //Encriptar
 
 //Importación de los modelos
 const Usuario = require('../models/usuario')
@@ -29,8 +30,11 @@ const usuarioPost = async(req, res = response) => {
     console.log(body)
     try {
         const usuario = new Usuario(body) //Instanciar el objeto   
-        await usuario.save()
+        //console.log(bcrypt.hashSync(body.password, 10))
+        const salt = 10
+        usuario.password = bcrypt.hashSync(body.password, salt)
         mensaje = 'El registro se realizó exitosamente'
+        await usuario.save()
     } catch (error) {
         console.log(error)
         if (error) {
@@ -51,7 +55,7 @@ const usuarioPut = async(req, res = response) => {
     let mensaje = ''
 
     try{
-        const usuario = await Usuario.findOneAndUpdate({nombre: nombre},{password:password, rol:rol, estado:estado})
+        const usuario = await Usuario.findOneAndUpdate({nombre: nombre},{password: bcrypt.hashSync(body.password, 10), rol:rol, estado:estado})
         mensaje = 'La modificación se efectuó exitosamente'
     }
     catch(error){

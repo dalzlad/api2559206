@@ -11,7 +11,7 @@ const UsuarioSchema = Schema({
         type: String,
         required: [true, 'El nombre es obligatorio'],
         minlength: [3, 'Debe tener mínimo 3 caracteres'],
-        maxlength:  [7, 'Debe tener máximo 3 caracteres']
+        //maxlength:  [7, 'Debe tener máximo 3 caracteres']
     },
 
     rol: {
