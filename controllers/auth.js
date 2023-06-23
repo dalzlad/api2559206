@@ -1,5 +1,6 @@
 const Usuario = require('../models/usuario')
 const bcrypt = require('bcrypt')
+const { generarJWT } = require('../helpers/generar-jwt')
 
 async function comparePassword(passwordForm, passworsBD) {
     const result = await bcrypt.compare(passwordForm, passworsBD);
@@ -29,8 +30,10 @@ const login = async(req, res) => {
         resultado = await comparePassword(password, usuarios.password)
 
         if(resultado == true){
+            const token = await generarJWT(usuarios)
             return res.status(200).json({
-                usuarios
+                //usuarios,
+                token: token
             })  
         }
         else{
