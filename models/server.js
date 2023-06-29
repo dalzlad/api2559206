@@ -1,3 +1,4 @@
+const cookieParser = require('cookie-parser');
 const express = require('express')
 const { dbConnection } = require('../database/config')
 const cors  = require('cors');//Implementar seguridad
@@ -22,10 +23,9 @@ class Server{
     }
 
     middlewares(){
+        this.app.use(cookieParser()); 
         this.app.use(express.static(__dirname + "/public"));
-        
         this.app.use( cors() );
-
         this.app.use(bodyParser.json()) // for parsing application/json
     }
 

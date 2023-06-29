@@ -4,14 +4,14 @@ const route = Router()
 
 //Importar métodos del controlador
 const {usuarioGet, usuarioPost, usuarioPut, usuarioDelete} = require('../controllers/usuario')
+const  {isAuthenticated}  = require('../controllers/auth')
 
-route.get('/', usuarioGet)
+route.get('/',  isAuthenticated, usuarioGet)
 
-route.post('/', usuarioPost)
+route.post('/', isAuthenticated, usuarioPost)
 
-route.put('/', usuarioPut)
+route.put('/', isAuthenticated, usuarioPut)
 
-
-route.delete('/', usuarioDelete)
+route.delete('/', isAuthenticated,  usuarioDelete)
 
 module.exports = route
